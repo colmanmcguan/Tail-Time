@@ -8,8 +8,6 @@ document.getElementById("timeout").value = config.timeout;
 
 /* listen for changes */
 document.getElementById("upload").addEventListener("click", (e) => {
-    var ffwindow = browser.extension.getBackgroundPage();
-
     newTimeout = parseInt(document.getElementById("timeout").value);
 
     /* catch invalid timeout values */

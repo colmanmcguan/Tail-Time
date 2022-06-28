@@ -1,7 +1,7 @@
 "use strict";
 
-var data = {};		/* timestamp request was sent, grouped by tab */
-var ttt = {};		/* tab's tail time (intervals) :) */
+var data = {};      /* timestamp request was sent, grouped by tab */
+var ttt = {};       /* tab's tail time (intervals) :) */
 var config = {      /* default config */
     enabled: true,
     timeout: 2000
