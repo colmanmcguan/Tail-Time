@@ -1,0 +1,21 @@
+{
+	"manifest_version" : 2,
+	"name": "tt",
+	"version": "1.0",
+    "description": "Tail Time Implementation",
+
+	"background": {
+		"scripts": ["tt.js"]
+	},
+
+	"permissions": [
+        "webRequest", 
+        "webRequestBlocking", 
+        "<all_urls>"
+	],
+
+    "browser_action": {
+        "default_title": "Tail Time Configuration",
+        "default_popup": "popup/config_popup.html"
+    }
+}
