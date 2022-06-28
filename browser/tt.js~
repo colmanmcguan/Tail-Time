@@ -32,6 +32,7 @@ function disable() {
     console.log("[!] TT disabled")
 }
 
+/* flush out overdue requests */
 function flush(tab) {
 	var overdue = false;
     var t = new Date().getTime();
@@ -52,6 +53,7 @@ function flush(tab) {
 	if (overdue) clearBlocked(tab);
 }
 
+/* send any blocked requests, if able */
 function clearBlocked(tab) {
     for (var r in data[tab])
         /* still have requests out */
@@ -67,6 +69,7 @@ function clearBlocked(tab) {
     }
 }
 
+/* need to cancel any blocked requests on this tab */
 function tabRemoved(tab) {
     for (var r in data[tab]) 
         if (typeof data[tab][r] == "function") 
@@ -77,7 +80,9 @@ function tabRemoved(tab) {
     delete data[tab];
 }
 
-function newRequest(details) {
+/* main function for receiving requests.
+ * processed based on the current state of tt */
+function reqNew(details) {
 	var req = details.requestId;
 	var tab = details.tabId;
 
@@ -93,6 +98,8 @@ function newRequest(details) {
         tabRemoved(tab);
 	}
 
+    /* first request of a webpage. 
+     * cleanup current interval and data */
 	if (!data[tab] && typeof details.documentUrl == "undefined") {
         console.log("[*] Tab " + tab 
                     + ": Setting up interval for new webpage load...");
@@ -122,7 +129,8 @@ function newRequest(details) {
         data[tab][req] = new Date().getTime();
 }
 
-function completed(details) {
+/* function for receiving completed requests */
+function reqCompleted(details) {
     var t = new Date().getTime();
 	var req = details.requestId;
 	var tab = details.tabId;
@@ -141,14 +149,14 @@ function completed(details) {
 
 /* listen for new requests */
 browser.webRequest.onBeforeRequest.addListener(
-	newRequest, 
+	reqNew, 
 	{urls: ["<all_urls>"]}, 
 	["blocking"]
 );
 
 /* listen for redirect */
 browser.webRequest.onBeforeRedirect.addListener(
-	completed,
+	reqCompleted,
 	{urls: ["<all_urls>"]}
 );
 

@@ -1,0 +1,3 @@
+# ignore pesky backup files
+**/*.un~
+**/*~
