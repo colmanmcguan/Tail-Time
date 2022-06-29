@@ -19,6 +19,11 @@ The browser extension is implemented using the Firefox webRequest API. Half-dupl
 ## Modified Tor Instance
 The modified instance of Tor is used to log cell sequences of a website trace.
 
+TODO: implement cell emitter
+
+## Tor Cell Logger
+The cell logger captures and stores the cells emitted from Tor for each website trace.
+
 TODO: implement cell logger
 
 ## Trace Padding
