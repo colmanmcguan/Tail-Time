@@ -5,11 +5,11 @@ Tail Time is a website fingerprinting defense built on top of Walkie-Talkie. In 
 ## Browser Extension
 The browser extension is implemented using the Firefox webRequest API. Half-duplex communication and the request timeout are implemented here.
 
-**Installing the Browser Plugin**
+**Installing the Browser Extension**
 * Navigate to [about:debugging](about:debugging) in the Firefox search bar
 * Click This Firefox
 * Click Load Temporary Add-on
-* Navigate to the plugin files and select manifest.json
+* Navigate to the extension files and select manifest.json
 
 **Configuring Tail Time**
 * Click the icon on the browser's toolbar
