@@ -1,8 +1,6 @@
 /* load in whatever the current config is */
 var ffwindow = browser.extension.getBackgroundPage();
-
 var config = JSON.parse(ffwindow.getConfig());
-
 document.getElementById("enabled").checked = config.enabled;
 document.getElementById("timeout").value = config.timeout;
 
