@@ -163,13 +163,13 @@ browser.webRequest.onBeforeRedirect.addListener(
 
 /* listen for completed requests */
 browser.webRequest.onCompleted.addListener(
-    completed,
+    reqCompleted,
     {urls: ["<all_urls>"]}
 );
 
 /* same as completed */
 browser.webRequest.onErrorOccurred.addListener(
-    completed,
+    reqCompleted,
     {urls: ["<all_urls>"]}
 );
 
