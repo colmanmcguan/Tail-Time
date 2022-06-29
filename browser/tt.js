@@ -16,8 +16,8 @@ function setConfig(newConfig) {
     if (config.enabled && !newConfig.enabled) disable();
     config = newConfig;
     console.log("[*] New config loaded with values:\n"
-        + "\tenabled: " + config.enabled + "\n"
-        + "\ttimeout: " + config.timeout);
+                + "\tenabled: " + config.enabled + "\n"
+                + "\ttimeout: " + config.timeout);
 }
 
 /* disable tt/wt */
@@ -38,14 +38,14 @@ function flush(tab) {
     var overdue = false;
     var t = new Date().getTime();
 
-    for (var r in data[tab]) {
+    for (var req in data[tab]) {
         /* remove requests older than tt */
-        if (typeof data[tab][r] == "number" 
-            && t - data[tab][r] > config.timeout) {
-            console.log("[*] Tab " + tab + ": Overdue request " + r 
-                + " cleared from outstanding requests: " 
-                + (t - data[tab][r]) + "ms");
-            delete data[tab][r];
+        if (typeof data[tab][req] == "number" 
+            && t - data[tab][req] > config.timeout) {
+            console.log("[*] Tab " + tab + ": Overdue request " + req 
+                        + " cleared from outstanding requests: " 
+                        + (t - data[tab][req]) + "ms");
+            delete data[tab][req];
             overdue = true;
         }
     }
@@ -56,25 +56,25 @@ function flush(tab) {
 
 /* send any blocked requests, if able */
 function clearBlocked(tab) {
-    for (var r in data[tab])
+    for (var req in data[tab])
         /* still have requests out */
-        if (typeof data[tab][r] == "number") return;
+        if (typeof data[tab][req] == "number") return;
 
     /* no active requests, send blocked */
     console.log("[*] Tab " + tab + ": Sending burst of " 
-        + Object.keys(data[tab]).length 
-        + " blocked requests");
-    for (var r in data[tab]) {
-        data[tab][r] ();
-        data[tab][r] = new Date().getTime();
+                + Object.keys(data[tab]).length 
+                + " blocked requests");
+    for (var req in data[tab]) {
+        data[tab][req] ();
+        data[tab][req] = new Date().getTime();
     }
 }
 
 /* need to cancel any blocked requests on this tab */
 function tabRemoved(tab) {
-    for (var r in data[tab]) 
-        if (typeof data[tab][r] == "function") 
-            data[tab][r]({cancel: true});
+    for (var req in data[tab]) 
+        if (typeof data[tab][req] == "function") 
+            data[tab][req]({cancel: true});
 
     clearInterval(ttt[tab]);
     delete ttt[tab];
@@ -95,7 +95,7 @@ function reqNew(details) {
     /* cancel blocked requests and destroy old interval */
     if (typeof details.documentUrl == "undefined" && data[tab]) {
         console.log("[*] Tab " + tab + ": Tearing down old interval and " 
-            + "canceling blocked requests...");
+                    + "canceling blocked requests...");
         tabRemoved(tab);
     }
 
@@ -103,7 +103,7 @@ function reqNew(details) {
      * cleanup current interval and data */
     if (!data[tab] && typeof details.documentUrl == "undefined") {
         console.log("[*] Tab " + tab 
-            + ": Setting up interval for new webpage load...");
+                    + ": Setting up interval for new webpage load...");
         data[tab] = {};
         ttt[tab] = setInterval(function() {flush(tab)}, 500);
 
@@ -113,8 +113,8 @@ function reqNew(details) {
     }
 
     /* check for outstanding requests before sending */
-    for (var r in data[tab]) {
-        if (typeof data[tab][r] == "number") {
+    for (var curReq in data[tab]) {
+        if (typeof data[tab][curReq] == "number") {
             /* halt request until outstanding return or tt */
             return new Promise((resolve, reject) => {
                 data[tab][req] = resolve;
