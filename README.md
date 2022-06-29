@@ -27,4 +27,4 @@ Padding is added to cell sequences to make traces for different websites appear 
 TODO: implement padding
 
 ## Reference
-J. Liang, C. Yu, K. Suh and H. Han, "Tail Time Defense Against Website Fingerprinting Attacks," in IEEE Access, vol. 10, pp. 18516-18525, 2022, doi: [link](10.1109/ACCESS.2022.3146236.)
+J. Liang, C. Yu, K. Suh and H. Han, "Tail Time Defense Against Website Fingerprinting Attacks," in IEEE Access, vol. 10, pp. 18516-18525, 2022, doi: [l10.1109/ACCESS.2022.3146236](10.1109/ACCESS.2022.3146236).
