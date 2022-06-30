@@ -17,3 +17,12 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+
+# Log files
+*.csv
+
+# Object code
+*.o
+
+# Build
+build/
