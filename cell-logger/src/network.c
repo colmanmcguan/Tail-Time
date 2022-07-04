@@ -82,7 +82,7 @@ int setup()
 /* read the next incoming packet and load it into a packet struct */
 struct clpacket * get_clpacket(int sockfd) {
 	int numbytes;
-	char buf[MAX_PACKET_SIZE];
+	char buf[MAX_TRMSN_SIZE];
 	socklen_t addrlen;
 	struct sockaddr_storage *senderaddr;
 	struct clpacket *clpkt;
@@ -95,7 +95,7 @@ struct clpacket * get_clpacket(int sockfd) {
 	if (clpkt == NULL)
 		return (clpkt);
 
-	if ((recvfrom(sockfd, buf, MAX_PACKET_SIZE, 0,
+	if ((recvfrom(sockfd, buf, MAX_TRMSN_SIZE, 0,
 			(struct sockaddr *)senderaddr, &addrlen)) == -1) {
 		fprintf(stderr, "[!] recvfrom() failed\n");
 		exit(1);

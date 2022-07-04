@@ -4,7 +4,7 @@
 #include <sys/socket.h>
 #include <time.h>
 
-#define MAX_PACKET_SIZE 512
+#define MAX_TRMSN_SIZE 3
 
 /* headers */
 #define INCOMING	0x01    /* incoming tor cell */
@@ -19,7 +19,7 @@ struct clpacket {
 	unsigned char header;
 	unsigned short length;
 	clock_t time;
-	unsigned char payload[MAX_PACKET_SIZE];
+	unsigned char payload[MAX_TRMSN_SIZE];
 };
 
 struct clpacket * create_clpacket();
