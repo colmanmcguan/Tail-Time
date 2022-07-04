@@ -84,19 +84,18 @@ struct clpacket * get_clpacket(int sockfd) {
 	int numbytes;
 	char buf[MAX_TRMSN_SIZE];
 	socklen_t addrlen;
-	struct sockaddr_storage *senderaddr;
+	struct sockaddr_storage senderaddr;
 	struct clpacket *clpkt;
 
 	clpkt = create_clpacket();
 	memset(&buf, 0, sizeof(buf));
-	senderaddr = malloc(sizeof(struct sockaddr_storage));
 	addrlen = sizeof(struct sockaddr);
 
 	if (clpkt == NULL)
 		return (clpkt);
 
 	if ((recvfrom(sockfd, buf, MAX_TRMSN_SIZE, 0,
-			(struct sockaddr *)senderaddr, &addrlen)) == -1) {
+			(struct sockaddr *)&senderaddr, &addrlen)) == -1) {
 		fprintf(stderr, "[!] recvfrom() failed\n");
 		exit(1);
 	}
