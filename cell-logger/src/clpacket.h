@@ -16,10 +16,10 @@
 #define CLOSE_CONN	3
 
 struct clpacket {
-	char header;
+	unsigned char header;
 	unsigned short length;
 	clock_t time;
-	char payload[MAX_PACKET_SIZE];
+	unsigned char payload[MAX_PACKET_SIZE];
 };
 
 struct clpacket * create_clpacket();
