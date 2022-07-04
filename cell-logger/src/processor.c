@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "clpacket.h"
 #include "log.h"
 #include "network.h"
 #include "processor.h"

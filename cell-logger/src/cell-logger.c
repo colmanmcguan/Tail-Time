@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "clpacket.h"
 #include "log.h"
 #include "network.h"
 #include "processor.h"

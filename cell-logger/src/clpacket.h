@@ -15,17 +15,16 @@
 #define BAD_PACK	2
 #define CLOSE_CONN	3
 
-struct addr {
-	struct sockaddr_storage *addr;
-	socklen_t addrlen;
-};
-
 struct clpacket {
 	char header;
 	unsigned short length;
 	clock_t time;
 	char payload[MAX_PACKET_SIZE];
-	struct addr *senderaddr;
 };
+
+struct clpacket * create_clpacket();
+void destroy_clpacket(struct clpacket *clpkt);
+void serialize_clpacket(char *buf, struct clpacket *clpkt);
+void unserialize_clpacket(char *buf, struct clpacket *clpkt);
 
 #endif

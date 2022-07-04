@@ -3,7 +3,8 @@ SRC = src
 OBJDIR = obj
 BUILD = build
 
-OBJECTS = $(addprefix $(OBJDIR)/, cell-logger.o processor.o network.o log.o)
+OBJECTS = $(addprefix $(OBJDIR)/, cell-logger.o processor.o network.o \
+	  				clpacket.o log.o)
 
 all: build cell-logger
 
