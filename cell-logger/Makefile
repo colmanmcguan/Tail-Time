@@ -1,24 +1,24 @@
 CC = gcc
 SRC = src
+OBJDIR = obj
 BUILD = build
+
+OBJECTS = $(addprefix $(OBJDIR)/, cell-logger.o processor.o network.o log.o)
 
 all: build cell-logger
 
 build:
-	$(shell if [ -d $(BUILD) ]; then rm -rf $(BUILD) fi)
-	$(shell mkdir $(BUILD))
-	
-cell-logger: cell-logger.o connmgr.o network.o
-	$(CC) -o $(BUILD)/cell-logger cell-logger.o connmgr.o network.o
+	[ -d $(OBJDIR) ] || mkdir $(OBJDIR);	\
+	if [ -d $(BUILD) ]; then 		\
+		rm -rf $(BUILD); 		\
+	fi;					\
+	mkdir $(BUILD) 755;
 
-cell-logger.o: $(SRC)/cell-logger.c
-	$(CC) -c $(SRC)/cell-logger.c
+cell-logger: $(OBJECTS)
+	$(CC) -o $(BUILD)/cell-logger $(OBJECTS)
 
-connmgr.o: $(SRC)/connmgr.c
-	$(CC) -c $(SRC)/connmgr.c
-
-network.o: $(SRC)/network.c
-	$(CC) -c $(SRC)/network.c
+$(OBJDIR)/%.o: $(SRC)/%.c
+	$(CC) -c -o $@ $<
 
 clean:
-	rm $(SRC)/*.o
+	rm $(OBJDIR)/*.o

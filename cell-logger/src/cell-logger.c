@@ -4,37 +4,45 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "log.h"
 #include "network.h"
-#include "connmgr.h"
+#include "processor.h"
 
-int main()
+int main(int argc, char **argv)
 {
 	int sockfd, ret, bad_packs;
-	FILE *data;
+
+	if (argc != 2) {
+		fprintf(stderr, "Usage: cell-logger <log-file.csv>\n");
+		exit(1);
+	}
+
+	printf("+--------------------------------+\n");
+	printf("| Setting up cell logger\n");
+	printf("+--------------------------------+\n");
+
+	/* initialize log file */
+	init_log(argv[1]);
 
 	/* setup socket to receive on */
 	sockfd = setup();
 	bad_packs = 0;
-	data = fopen("log.csv", "w");
 
 	/* loop forever until control says we're done */
 	for (;;) {
-		ret = manage_connection(sockfd, data);
+		ret = get_cell(sockfd);
 
 		switch (ret) {
 			case BAD_PACK:
 				bad_packs++;
 				break;
 			case CLOSE_CONN:
-				printf("+------------------------+\n");
-				printf("received shutdown notice\n");
-				printf("+------------------------+\n");
+				printf("+--------------------------------+\n");
+				printf("| Received shutdown notice\n");
+				printf("+--------------------------------+\n");
 				printf("stats:\n");
-				printf("\t%d bad packets\n");
-				printf("closing resources\n");
-				close(sockfd);
-				fclose(data);
-				printf("done\n");
+				printf("\t%d bad packets\n", bad_packs);
+				close_log();
 				goto done;
 		}
 	}
