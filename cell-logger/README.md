@@ -19,6 +19,7 @@ The header determines the command associated with the packet:
 * Incoming cell - 0x01
 * Outgoing cell - 0x02
 * Shutdown      - 0x03
+
 The length field indicates the length of the time and payload fields only.
 
 ## Building
