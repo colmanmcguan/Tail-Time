@@ -7,7 +7,6 @@
 #include "log.h"
 
 FILE *fp;
-clock_t start;
 
 void init_log(char *filename)
 {
@@ -22,8 +21,6 @@ void init_log(char *filename)
 	/* create new log file */
 	sprintf(logfile, "%s/%s", logs, filename);
 	fp = fopen(logfile, "w");
-	fprintf(fp, "time, direction\n");
-	start = time(NULL);
 }
 
 void close_log() { fclose(fp); }
@@ -33,14 +30,14 @@ void log_trace(struct clpacket *clpkt)
 {
 	switch (clpkt->header) {
 		case 0x01:
-		       fprintf(fp, "%d.%d, -1, %d, %d\n",
+		       fprintf(fp, "%u.%u, -1, %u, %u\n",
 				       clpkt->tspec.tv_sec,
 				       clpkt->tspec.tv_nsec,
 				       clpkt->command,
 				       clpkt->circ_id);
 		       break;
 		case 0x02:
-		       fprintf(fp, "%d.%d, 1, %d, %d\n",
+		       fprintf(fp, "%u.%u, 1, %u, %u\n",
 				       clpkt->tspec.tv_sec,
 				       clpkt->tspec.tv_nsec,
 				       clpkt->command,
