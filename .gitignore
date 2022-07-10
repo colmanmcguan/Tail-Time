@@ -25,4 +25,4 @@ tags
 *.o
 
 # Build
-build/
+cell-logger
