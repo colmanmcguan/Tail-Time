@@ -1,10 +1,11 @@
 #ifndef CELL_LOGGER_PACKET_H_
 #define CELL_LOGGER_PACKET_H_
 
+#include <inttypes.h>
 #include <sys/socket.h>
 #include <time.h>
 
-#define MAX_TRMSN_SIZE 3
+#define CLPACKET_SIZE 14 
 
 /* headers */
 #define INCOMING	0x01    /* incoming tor cell */
@@ -17,12 +18,12 @@
 
 struct clpacket {
 	unsigned char header;
-	unsigned short length;
-	clock_t time;
-	unsigned char payload[MAX_TRMSN_SIZE];
+	struct timespec tspec;
+	uint8_t command;
+	uint32_t circ_id;
 };
 
-struct clpacket * create_clpacket();
+struct clpacket * create_clpacket(void);
 void destroy_clpacket(struct clpacket *clpkt);
 void serialize_clpacket(char *buf, struct clpacket *clpkt);
 void unserialize_clpacket(char *buf, struct clpacket *clpkt);

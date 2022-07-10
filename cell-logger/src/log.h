@@ -3,6 +3,6 @@
 
 void init_log(char *filename);
 void close_log();
-void log_trace(unsigned short func, time_t time, char *payload);
+void log_trace(struct clpacket *clpkt);
 
 #endif

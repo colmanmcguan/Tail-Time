@@ -29,9 +29,22 @@ void init_log(char *filename)
 void close_log() { fclose(fp); }
 
 /* log the relative timestamp and direction */
-void log_trace(unsigned short func, clock_t time, char *payload)
+void log_trace(struct clpacket *clpkt)
 {
-	double reltime;
-	reltime = (double)(start - time) / CLOCKS_PER_SEC;
-	fprintf(fp, "%lf, %s\n", reltime, payload);
+	switch (clpkt->header) {
+		case 0x01:
+		       fprintf(fp, "%d.%d, -1, %d, %d\n",
+				       clpkt->tspec.tv_sec,
+				       clpkt->tspec.tv_nsec,
+				       clpkt->command,
+				       clpkt->circ_id);
+		       break;
+		case 0x02:
+		       fprintf(fp, "%d.%d, 1, %d, %d\n",
+				       clpkt->tspec.tv_sec,
+				       clpkt->tspec.tv_nsec,
+				       clpkt->command,
+				       clpkt->circ_id);
+		       break;
+	}
 }

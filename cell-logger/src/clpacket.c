@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <arpa/inet.h>
 
 #include "clpacket.h"
 
@@ -28,21 +29,20 @@ void destroy_clpacket(struct clpacket *clpkt)
 void serialize_clpacket(char *buf, struct clpacket *clpkt)
 {
 	buf[0] = clpkt->header;
-	buf[1] = clpkt->length >> 8;
-	buf[2] = clpkt->length;
-	buf[3] = clpkt->time >> 24;
-	buf[4] = clpkt->time >> 16;
-	buf[5] = clpkt->time >> 8;
-	buf[6] = clpkt->time;
-	memcpy(buf + 7, clpkt->payload, MAX_TRMSN_SIZE - 7);
+	*(uint32_t *)(buf + 2) = htonl(clpkt->tspec.tv_sec);
+	*(uint32_t *)(buf + 6) = htonl(clpkt->tspec.tv_nsec);
+	*(uint8_t *)(buf + 10) = clpkt->command;
+	*(uint32_t *)(buf + 11) = htonl(clpkt->circ_id);
+
 }
 
 /* unpack buffer into packet */
 void unserialize_clpacket(char *buf, struct clpacket *clpkt)
 {
 	clpkt->header = buf[0];
-	clpkt->length = (buf[1] << 8 | buf[2]);
-	clpkt->time = (buf[3] << 24 | buf[4] << 16 | buf[5] << 8 | buf[6]);
-	memcpy(clpkt->payload, buf + 7, MAX_TRMSN_SIZE - 7);
+	clpkt->tspec.tv_sec = ntohl(*(uint32_t *)(buf + 1));
+	clpkt->tspec.tv_nsec = ntohl(*(uint32_t *)(buf + 5));
+	clpkt->command = ntohs(*(uint8_t *)(buf + 9));
+	clpkt->circ_id = ntohl(*(uint32_t *)(buf + 10));
 }
 

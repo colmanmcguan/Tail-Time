@@ -13,12 +13,8 @@ int process_clpacket(struct clpacket *clpkt) {
 	switch (clpkt->header) {
 		case INCOMING:
 		case OUTGOING:
-			/* packet malformatted */
-			if (clpkt->length != 0x06)
-				goto fail;
-
 			/* log cell */
-			log_trace(clpkt->header, clpkt->time, clpkt->payload);
+			log_trace(clpkt);
 			break;
 		case SHUTDOWN:
 			/* shutting down */
@@ -27,7 +23,6 @@ int process_clpacket(struct clpacket *clpkt) {
 			/* packet malformed */
 			goto fail;
 	}
-
 	return (GOOD_PACK);
 
 	shutdown:
