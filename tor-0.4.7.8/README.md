@@ -1,6 +1,8 @@
 # Modified Tor Instance
 Tor has been modified to emit incoming and outgoing cells to the cell logger.
 
+## About
+
 Tor protects your privacy on the internet by hiding the connection between
 your Internet address and the services you use. We believe Tor is reasonably
 secure, but please ensure you read the instructions and configure it properly.
