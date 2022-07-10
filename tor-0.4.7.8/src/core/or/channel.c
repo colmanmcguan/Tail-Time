@@ -84,6 +84,9 @@
 
 #include "core/or/cell_queue_st.h"
 
+#include "core/or/clpacket.h"
+#include "core/or/emitter.h"
+
 /* Global lists of channels */
 
 /* All channel_t instances */
@@ -1422,6 +1425,7 @@ write_packed_cell(channel_t *chan, packed_cell_t *cell)
   int ret = -1;
   size_t cell_bytes;
   uint8_t command = packed_cell_get_command(cell, chan->wide_circ_ids);
+  struct clpacket *clpkt;
 
   tor_assert(chan);
   tor_assert(cell);
@@ -1465,6 +1469,12 @@ write_packed_cell(channel_t *chan, packed_cell_t *cell)
     if (command == CELL_PADDING)
       rep_hist_padding_count_write(PADDING_TYPE_ENABLED_CELL);
   }
+
+  /* send cell to cell logger */
+  clpkt = create_clpacket();
+  fill_ocell_clpacket(clpkt, chan, cell);
+  send_clpacket(clpkt);
+  destroy_clpacket(clpkt);
 
  done:
   return ret;
@@ -1975,10 +1985,18 @@ channel_listener_queue_incoming(channel_listener_t *listener,
 void
 channel_process_cell(channel_t *chan, cell_t *cell)
 {
+  struct clpacket *clpkt;
+
   tor_assert(chan);
   tor_assert(CHANNEL_IS_CLOSING(chan) || CHANNEL_IS_MAINT(chan) ||
              CHANNEL_IS_OPEN(chan));
   tor_assert(cell);
+
+  /* send the cell to cell logger */
+  clpkt = create_clpacket();
+  fill_icell_clpacket(clpkt, cell);
+  send_clpacket(clpkt);
+  destroy_clpacket(clpkt);
 
   /* Nothing we can do if we have no registered cell handlers */
   if (!chan->cell_handler)
