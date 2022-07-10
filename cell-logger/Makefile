@@ -16,7 +16,7 @@ cell-logger: $(OBJECTS)
 	$(CC) -o $(BUILD)/cell-logger $(OBJECTS)
 
 $(SRC)/%.o: $(SRC)/%.c
-	$(CC) -c -o $@ $<
+	$(CC) -g -c -o $@ $<
 
 clean:
 	rm $(SRC)/*.o
