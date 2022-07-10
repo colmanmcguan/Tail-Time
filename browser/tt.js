@@ -45,7 +45,8 @@ function flush(tab) {
 		/* remove requests older than tt */
 		if (typeof data[tab][req] == "number" && t - data[tab][req] > config.timeout) {
 			console.log("[*] Tab " + tab + ": Overdue request " + req 
-					+ " cleared from outstanding requests: "+ (t - data[tab][req]) + "ms");
+					+ " cleared from outstanding requests: "
+					+ (t - data[tab][req]) + "ms");
 			delete data[tab][req];
 			overdue = true;
 		}
@@ -65,7 +66,8 @@ function clearBlocked(tab) {
 		if (typeof data[tab][req] == "number") return;
 
 	/* no active requests, send blocked */
-	console.log("[*] Tab " + tab + ": Sending burst of " + Object.keys(data[tab]).length + " blocked requests");
+	console.log("[*] Tab " + tab + ": Sending burst of " + Object.keys(data[tab]).length 
+			+ " blocked requests");
 	for (var req in data[tab]) {
 		data[tab][req] ({});
 		data[tab][req] = new Date().getTime();

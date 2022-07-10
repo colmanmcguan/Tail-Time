@@ -39,15 +39,13 @@ int setup()
 	hints.ai_flags = AI_PASSIVE;
 
 	if ((status = getaddrinfo(NULL, RECV_PORT, &hints, &iplist)) != 0) {
-		fprintf(stderr, "[!] getaddrinfo() failed with: %s\n", 
-				gai_strerror(status));
+		fprintf(stderr, "[!] getaddrinfo() failed with: %s\n", gai_strerror(status));
 		exit(1);
 	}
 
 	/* bind us to socket */
 	for (ip_ptr = iplist; ip_ptr != NULL; ip_ptr = ip_ptr->ai_next) {
-		sockfd = socket(ip_ptr->ai_family, 
-				ip_ptr->ai_socktype, ip_ptr->ai_protocol);
+		sockfd = socket(ip_ptr->ai_family, ip_ptr->ai_socktype, ip_ptr->ai_protocol);
 
 		if (sockfd == -1) continue;
 
@@ -70,11 +68,9 @@ int setup()
 	}
 
 	printf("[*] Using address: %s\n", 
-			inet_ntop(ip_ptr->ai_addr->sa_family,
-					get_addr_type(ip_ptr->ai_addr),
+			inet_ntop(ip_ptr->ai_addr->sa_family,get_addr_type(ip_ptr->ai_addr),
 					addr_string, sizeof(addr_string)));
-	printf("[*] Bind successful. Port: %hu\n", 
-		get_addr_port(ip_ptr->ai_addr));
+	printf("[*] Bind successful. Port: %hu\n", get_addr_port(ip_ptr->ai_addr));
 
 	return (sockfd);
 }
@@ -94,7 +90,7 @@ struct clpacket * get_clpacket(int sockfd) {
 	if (clpkt == NULL)
 		return (clpkt);
 
-	if ((recvfrom(sockfd, buf, MAX_TRMSN_SIZE, 0,
+	if ((recvfrom(sockfd, buf, MAX_TRMSN_SIZE, 0, 
 			(struct sockaddr *)&senderaddr, &addrlen)) == -1) {
 		fprintf(stderr, "[!] recvfrom() failed\n");
 		exit(1);
