@@ -41,7 +41,7 @@ void unserialize_clpacket(char *buf, struct clpacket *clpkt)
 	clpkt->header = buf[0];
 	clpkt->tspec.tv_sec = ntohl(*(uint32_t *)(buf + 1));
 	clpkt->tspec.tv_nsec = ntohl(*(uint32_t *)(buf + 5));
-	clpkt->command = (buf + 9);
+	clpkt->command = *(uint8_t *)(buf + 9);
 	clpkt->circ_id = ntohl(*(uint32_t *)(buf + 10));
 }
 
