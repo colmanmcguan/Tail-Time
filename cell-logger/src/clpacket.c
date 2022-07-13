@@ -31,7 +31,7 @@ void serialize_clpacket(char *buf, struct clpacket *clpkt)
 	buf[0] = clpkt->header;
 	*(uint32_t *)(buf + 1) = htonl(clpkt->tspec.tv_sec);
 	*(uint32_t *)(buf + 5) = htonl(clpkt->tspec.tv_nsec);
-	*(uint8_t *)(buf + 9) = htons(clpkt->command);
+	*(uint8_t *)(buf + 9) = clpkt->command;
 	*(uint32_t *)(buf + 10) = htonl(clpkt->circ_id);
 
 }
@@ -42,7 +42,7 @@ void unserialize_clpacket(char *buf, struct clpacket *clpkt)
 	clpkt->header = buf[0];
 	clpkt->tspec.tv_sec = ntohl(*(uint32_t *)(buf + 1));
 	clpkt->tspec.tv_nsec = ntohl(*(uint32_t *)(buf + 5));
-	clpkt->command = ntohs(*(uint8_t *)(buf + 9));
+	clpkt->command = (buf + 9);
 	clpkt->circ_id = ntohl(*(uint32_t *)(buf + 10));
 }
 
