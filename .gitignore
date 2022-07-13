@@ -23,6 +23,3 @@ tags
 
 # Object code
 *.o
-
-# Build
-build/cell-logger
