@@ -17,14 +17,15 @@ The browser extension is implemented using the Firefox webRequest API. Half-dupl
 * Set the desired timeout value
 
 ## Modified Tor Instance
-The modified instance of Tor is used to log cell sequences of a website trace.
-
-TODO: implement cell emitter
+The modified instance of Tor is used to emit cell sequences of a webpage trace to the cell logger. Tor is run in docker for this experiment.
 
 ## Tor Cell Logger
-The cell logger captures and stores the cells emitted from Tor for each website trace.
+The cell logger captures and stores the cells emitted from Tor for each webpage trace in a csv file. For each webpage load, the cell logger is restarted. It takes a single parameter -- the name of the file to write to.
 
-TODO: implement cell logger
+## Controller
+The controller sets up Tor, the cell logger, and webpage accesses to collect data for each trace.
+
+TODO: implement main control script
 
 ## Trace Padding
 Padding is added to cell sequences to make traces for different websites appear similar.

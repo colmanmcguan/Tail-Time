@@ -1,5 +1,5 @@
 # Modified Tor Instance
-Tor has been modified to emit incoming and outgoing cells to the cell logger.
+Tor has been modified to emit incoming and outgoing cells to the cell logger. It uses the same interface as the cell logger to send data.
 
 ## About
 
