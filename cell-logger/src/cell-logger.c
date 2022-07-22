@@ -28,6 +28,11 @@ int main(int argc, char **argv)
 	/* setup socket to receive on */
 	sockfd = setup();
 	bad_packs = 0;
+	good_packs = 0;
+
+	/* couldn't get a socket */
+	if (sockfd == -1)
+		goto done;
 
 	/* loop forever until control says we're done */
 	for (;;) {
@@ -37,12 +42,16 @@ int main(int argc, char **argv)
 			case BAD_PACK:
 				bad_packs++;
 				break;
+			case GOOD_PACK:
+				good_packs++;
+				break
 			case CLOSE_CONN:
 				printf("+--------------------------------+\n");
 				printf("| Received shutdown notice\n");
 				printf("+--------------------------------+\n");
 				printf("stats:\n");
-				printf("\t%d bad packets\n", bad_packs);
+				printf("\t%07d bad packets\n", bad_packs);
+				printf("\t%07d good packets\n", good_packs);
 				close_log();
 				goto done;
 		}

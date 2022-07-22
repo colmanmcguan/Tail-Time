@@ -40,7 +40,7 @@ int setup()
 
 	if ((status = getaddrinfo(NULL, RECV_PORT, &hints, &iplist)) != 0) {
 		fprintf(stderr, "[!] getaddrinfo() failed with: %s\n", gai_strerror(status));
-		exit(1);
+		return (-1);
 	}
 
 	/* bind us to socket */
@@ -64,7 +64,7 @@ int setup()
 	/* couldn't bind to socket */
 	if (ip_ptr == NULL) {
 		fprintf(stderr, "[!] bind() failed\n");
-		exit(1);
+		return (-1);
 	}
 
 	printf("[*] Using address: %s\n", 
