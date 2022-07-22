@@ -16,7 +16,7 @@ void init_log(char *filename)
 
 	/* set up logs directory if needed */
 	if (!(stat(logs, &sb) == 0 && S_ISDIR(sb.st_mode)))
-		mkdir(logs, 755);
+		mkdir(logs, 0755);
 
 	/* create new log file */
 	sprintf(logfile, "%s/%s", logs, filename);
@@ -30,18 +30,18 @@ void log_trace(struct clpacket *clpkt)
 {
 	switch (clpkt->header) {
 		case 0x01:
-		       fprintf(fp, "%u.%u, -1, %u, %u\n",
-				       clpkt->tspec.tv_sec,
-				       clpkt->tspec.tv_nsec,
-				       clpkt->command,
-				       clpkt->circ_id);
-		       break;
+			fprintf(fp, "%u.%u, -1, %u, %u\n",
+					clpkt->tspec.tv_sec,
+					clpkt->tspec.tv_nsec,
+					clpkt->command,
+					clpkt->circ_id);
+			break;
 		case 0x02:
-		       fprintf(fp, "%u.%u, 1, %u, %u\n",
-				       clpkt->tspec.tv_sec,
-				       clpkt->tspec.tv_nsec,
-				       clpkt->command,
-				       clpkt->circ_id);
-		       break;
+			fprintf(fp, "%u.%u, 1, %u, %u\n",
+					clpkt->tspec.tv_sec,
+					clpkt->tspec.tv_nsec,
+					clpkt->command,
+					clpkt->circ_id);
+			break;
 	}
 }
