@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	}
 
 	printf("+--------------------------------+\n");
-	printf("| %30s |\n", "Setting up cell logger");
+	printf("|     Setting up cell logger     |\n");
 	printf("+--------------------------------+\n");
 
 	/* initialize log file */
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 				break;
 			case CLOSE_CONN:
 				printf("+--------------------------------+\n");
-				printf("| %30s |\n", "Received Shutdown Notice");
+				printf("|    Received shutdown notice    |\n");
 				printf("+--------------------------------+\n");
 				printf("stats:\n");
 				printf("\t%07d bad packets\n", bad_packs);
