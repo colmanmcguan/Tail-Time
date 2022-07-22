@@ -12,4 +12,5 @@ python3 -m pip install selenium
 ```
 
 **geckodriver**
+
 Download from https://github.com/mozilla/geckodriver/releases
