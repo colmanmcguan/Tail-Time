@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-	int sockfd, ret, bad_packs;
+	int sockfd, ret, good_packs, bad_packs;
 
 	if (argc != 2) {
 		fprintf(stderr, "Usage: cell-logger <log-file.csv>\n");
@@ -27,8 +27,8 @@ int main(int argc, char **argv)
 
 	/* setup socket to receive on */
 	sockfd = setup();
-	bad_packs = 0;
 	good_packs = 0;
+	bad_packs = 0;
 
 	/* couldn't get a socket */
 	if (sockfd == -1)
@@ -39,12 +39,12 @@ int main(int argc, char **argv)
 		ret = get_cell(sockfd);
 
 		switch (ret) {
+			case GOOD_PACK:
+				good_packs++;
+				break;
 			case BAD_PACK:
 				bad_packs++;
 				break;
-			case GOOD_PACK:
-				good_packs++;
-				break
 			case CLOSE_CONN:
 				printf("+--------------------------------+\n");
 				printf("| Received shutdown notice\n");
